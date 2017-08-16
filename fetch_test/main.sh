@@ -14,6 +14,6 @@ if [[ ${confirm} == 'G' ]] ; then
   mv fetch_exp_head fetch_result.txt
   ./receipt
 elif [[ ${confirm} == 'P' ]] ; then
-  python invoice.py > fetch_result_py.txt
+  python2 invoice.py > fetch_result_py.txt
   ./receipt
 fi
