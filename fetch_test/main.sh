@@ -1,7 +1,8 @@
 #!/bin/bash
 echo "獲取清單中..."
-curl -Ls http://invoice.etax.nat.gov.tw/ | sed 's/spanid/span id/g'  |  tidy -imq --show-errors 0 | grep 'class=".*">[0-9]*<' | sed 's/class=\".*\"//g' | sed 's/<h.*>//g' | sed 's/[^0-9]//g' | sed '5,$ s/\w//g' > fetch_exp_head
-curl -Ls http://invoice.etax.nat.gov.tw/ | sed 's/spanid/span id/g'  |  tidy -imq --show-errors 0 | sed 's/、/ /g' | grep '".*">[0-9].*<' | grep 'span' | sed 's/class=\".*\"//g' | sed 's/\".*\"//g' | sed 's/<.*>//g' | sed 's/>//g' | sed '4,$ s/[0-9]//g' > fetch_head
+curl -Ls http://invoice.etax.nat.gov.tw/ > source.html
+cat source.html | sed 's/spanid/span id/g'  |  tidy -imq --show-errors 0 | grep 'class=".*">[0-9]*<' | sed 's/class=\".*\"//g;s/<h.*>//g;s/[^0-9]//g;5,$ s/\w/:/g;s/\ /:/g;/:/d;/^$/d;s/\ /:/;2 s/^/特別獎：/;3 s/^/特獎：/;4 s/^/增開陸獎：/' > fetch_exp_head
+cat source.html | sed 's/spanid/span id/g'  |  tidy -imq --show-errors 0 | sed 's/、/ /g' | grep '".*">[0-9].*<' | grep 'span' | sed 's/class=\".*\"//g;s/\".*\"//g;s/<.*>//g;s/>//g;4,$ s/[0-9]//g;1,2 s/\ /:/g;4,$ s/\ /:/g;/:/d;s/^[\ ]*/:/g;s/:/頭獎：/;s/ /;/g'> fetch_head
 cat ./fetch_head >> fetch_exp_head
 mv fetch_exp_head fetch_result.txt
 read -p "輸入發票末三碼：" last_three
