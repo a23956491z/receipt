@@ -11,7 +11,7 @@ read -p "(y/n)" confirm
 grep_res=$(grep "${last_three}" fetch_result.txt)
 if [[ ${confirm} == 'y' ]] ; then
   if [[ ${grep_res} ]] ; then
-    if [[ $(${grep_res} | sed 's/[0-9]//;s/://') ==  "增開陸獎" ]] ; then
+    if [[ $(echo ${grep_res} | sed 's/[0-9]//;s/://') ==  "增開陸獎" ]] ; then
       echo "增開陸獎"
       exit 0
     else
