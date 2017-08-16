@@ -18,22 +18,6 @@ if [[ ${confirm} == 'y' ]] ; then
       echo "輸入的碼是：" ${all_code}
       read -p "(y/n)" sec_confirm
       if [[ ${sec_confirm} == 'y' ]] ; then
-        code_array=(${all_code})
-        for (( i=0 ; i<=7 ; i++ )) ; do
-          grep_sec_res=$(grep ${code_array[i]} fetch_result.txt)
-          if [[ ${grep_sec_res} ]] ; then
-            if [[ $(${grep_sec_res} | wc -l) == '0' ]] ; then
-              case $i in :
-                2) echo "陸獎" ;;
-                3) ;;
-                4) ;;
-                5) ;;
-                6) ;;
-                7) grep ${all_code} fetch_result.txt 
-              esac
-            fi
-          fi
-        done
       else
         exit 0
       fi
